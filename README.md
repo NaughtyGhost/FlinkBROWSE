@@ -1,8 +1,8 @@
 #  FlinkBROWSE is a fast, secure proxy built especially for Flink (https://www.flink.lol) using the 'http.server'module, and made for evading scrutiny and freely accessing possibly blocked websites.
 
-# To use in-browser, simply visit https://browse.flink.lol.
+## To use in-browser, simply visit https://browse.flink.lol.
 
-# Here's a step-by-step guide to using FlinkBROWSE locally:
+## Here's a step-by-step guide to using FlinkBROWSE locally:
 ### **1) Using a Terminal or Command Prompt: open a terminal or command prompt on your computer.**
 
 Create a new directory by running the command 'mkdir flinkbrowse-proxy'
