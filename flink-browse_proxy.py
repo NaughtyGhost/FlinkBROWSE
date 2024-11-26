@@ -6,6 +6,18 @@ import logging
 
 class FlinkBROWSEProxyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        self.handle_request('GET')
+
+    def do_POST(self):
+        self.handle_request('POST')
+
+    def do_PUT(self):
+        self.handle_request('PUT')
+
+    def do_DELETE(self):
+        self.handle_request('DELETE')
+
+    def handle_request(self, method):
         # Parse the incoming request
         parsed_path = urlparse(self.path)
 
@@ -18,8 +30,14 @@ class FlinkBROWSEProxyHandler(BaseHTTPRequestHandler):
             return
 
         # Create a new request to the target server
-        req = Request(self.path)
-        req.add_header('User -Agent', self.headers['User -Agent'])
+        req = Request(self.path, method=method)
+        req.add_header('User -Agent', self.headers.get('User -Agent', ''))
+
+        # Handle request body for POST and PUT methods
+        if method in ['POST', 'PUT']:
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length > 0:
+                req.data = self.rfile.read(content_length)
 
         try:
             # Forward the request to the target server
@@ -59,5 +77,5 @@ def run_proxy(server_class=HTTPServer, handler_class=FlinkBROWSEProxyHandler):
     httpd.serve_forever()
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.ERROR)  # Set up logging
+    logging.basicConfig(level=logging.INFO)  # Set up logging to INFO level
     run_proxy()
